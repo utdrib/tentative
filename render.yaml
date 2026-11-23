@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: tentative-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    disk:
+      name: tentative-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////app/data/tentative.db
+      - key: SECRET_KEY
+        sync: false
+      - key: FERNET_KEY
+        sync: false
+      - key: PHONE_HASH_SALT
+        sync: false
+      - key: SMS_PROVIDER
+        value: console
+      - key: DEFAULT_SEMESTER_END_DATE
+        value: "2026-12-18"
+      - key: ADMIN_NAME
+        value: Admin Commander
+      - key: ADMIN_PHONE
+        value: "+19725550100"
+      - key: SEED_ON_STARTUP
+        value: "true"
+      - key: ENVIRONMENT
+        value: production
+
+  - type: web
+    name: tentative-frontend
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: tentative-backend
+          property: hostport
