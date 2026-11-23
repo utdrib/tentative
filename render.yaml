@@ -2,13 +2,10 @@ services:
   - type: web
     name: tentative-backend
     runtime: docker
+    plan: free
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     healthCheckPath: /api/health
-    disk:
-      name: tentative-data
-      mountPath: /app/data
-      sizeGB: 1
     envVars:
       - key: DATABASE_URL
         value: sqlite:////app/data/tentative.db
@@ -34,6 +31,7 @@ services:
   - type: web
     name: tentative-frontend
     runtime: docker
+    plan: free
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     envVars:
