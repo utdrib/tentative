@@ -15,6 +15,14 @@ services:
         sync: false
       - key: PHONE_HASH_SALT
         sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: TWILIO_VERIFY_SERVICE_SID
+        sync: false
       - key: SMS_PROVIDER
         value: console
       - key: DEFAULT_SEMESTER_END_DATE
